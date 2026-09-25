@@ -28,7 +28,7 @@ from PIL import Image
 from .data import validate_dataset
 
 MODEL_ID = "facebook/convnextv2-tiny-1k-224"
-MODEL_REVISION = "unpinned"
+MODEL_REVISION = "f4db009e63145e02b3c075aa64d90ce41bcca4b1"
 MODEL_LICENSE = "cc-by-nc-4.0"
 MODEL_KEY = "convnextv2-tiny-1k-224"
 DEFAULT_WEIGHTS_DIR = Path(__file__).resolve().parents[2] / "weights" / MODEL_KEY

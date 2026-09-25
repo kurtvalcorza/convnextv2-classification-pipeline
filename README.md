@@ -4,12 +4,12 @@ DIMER pipeline for **ConvNeXt V2 Tiny** (`facebook/convnextv2-tiny-1k-224`), a p
 
 > **Non-commercial weights.** The upstream `ConvNeXt-V2` repository releases its ImageNet models under **CC-BY-NC-4.0**, although the Hugging Face card is tagged Apache-2.0. This repository follows the upstream licence; see `MODEL_CARD.md`. The pipeline loads the checkpoint only from a digest-verified local snapshot, returns top-k softmax scores over the ImageNet-1k classes, and adds a bounded fine-tuning workflow that replaces the head for a new set of classes, compares it with majority-class and zero-shot baselines, and exports a SafeTensors adapter.
 
-> **The upstream snapshot is not yet pinned.** `MODEL_REVISION` is `"unpinned"` and the manifest records byte sizes but no SHA-256 digests. Every weight operation refuses to run until `python tools/pin_snapshot.py` has recorded the commit and digests (see [Pinning the snapshot](#pinning-the-snapshot)).
+> **The upstream snapshot is pinned** to Hub commit `f4db009e63145e02b3c075aa64d90ce41bcca4b1` (pinned 2026-09-25). The manifest records every file's byte size and SHA-256, and each LFS digest matched the Hub's record. No execution with the pinned weights is recorded yet (see [Release status](#release-status)).
 
 ## Upstream alignment
 
 - Model: `facebook/convnextv2-tiny-1k-224`
-- Revision: not yet pinned (`unpinned`)
+- Revision: `f4db009e63145e02b3c075aa64d90ce41bcca4b1`
 - Upstream weight license: CC-BY-NC-4.0 (upstream repository; the Hub card metadata says Apache-2.0)
 - Upstream task: single-label classification over the 1000 ImageNet-1k classes
 - Repository adaptation: bounded gradient fine-tuning of a new head, with the whole network trained by default or the convolutional backbone frozen
@@ -41,12 +41,12 @@ Install into a Python 3.12 environment that already holds the pinned dependencie
 
 ## Pinning the snapshot
 
-From the repository root, with network access to huggingface.co:
+The snapshot is pinned (see [Upstream alignment](#upstream-alignment)). To move to a newer upstream commit, from the repository root with network access to huggingface.co:
 
-1. Run `python tools/pin_snapshot.py`. It resolves `main` to a commit, downloads the four manifest files at that commit into `weights/convnextv2-tiny-1k-224/`, checks each LFS file against the Hub's SHA-256, records the LFS SHA-256 of `pytorch_model.bin` and `tf_model.h5` without downloading them, and writes the commit and digests into the manifest and `MODEL_REVISION`.
+1. Run `python tools/pin_snapshot.py` (or `--revision <commit>`). It resolves `main` to a commit, downloads the four manifest files at that commit into `weights/convnextv2-tiny-1k-224/`, checks each LFS file against the Hub's SHA-256, records the LFS SHA-256 of `pytorch_model.bin` and `tf_model.h5` without downloading them, and writes the commit and digests into the manifest and `MODEL_REVISION`.
 2. Commit, then run `python tools/build_notebook.py` and commit the regenerated notebook.
-3. Replace the "not yet pinned" statements in `README.md`, `MODEL_CARD.md`, `STATUS.md` and `docs/WEIGHTS.md` with the commit and digests.
-4. Run `python tools/validate_release_assets.py` and `pytest`. The validator fails while any document still says the snapshot is not yet pinned.
+3. Update the commit and digests cited in `README.md`, `MODEL_CARD.md`, `STATUS.md`, `docs/WEIGHTS.md`, `tutorials/README.md` and `docs/release-verification.md`.
+4. Run `python tools/validate_release_assets.py` and `pytest`. A new pin invalidates any recorded execution, so the status returns to Candidate until the new commit is run.
 
 ## Weights layout
 
@@ -71,7 +71,7 @@ weights/convnextv2-tiny-1k-224/
 
 ## Release status
 
-**Candidate.** The snapshot is not yet pinned and no execution with the pinned weights is recorded. Static checks, unit tests and the small-model test do not constitute notebook execution evidence; `docs/release-verification.md` defines the release gate.
+**Candidate.** The snapshot is pinned (`f4db009`), but no execution with the pinned weights is recorded. Static checks, unit tests and the small-model test do not constitute notebook execution evidence; `docs/release-verification.md` defines the release gate.
 
 ## Documentation
 

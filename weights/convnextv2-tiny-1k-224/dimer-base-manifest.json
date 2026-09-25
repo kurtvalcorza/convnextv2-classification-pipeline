@@ -3,27 +3,27 @@
   "formatVersion": 1,
   "modelKey": "convnextv2-tiny-1k-224",
   "modelId": "facebook/convnextv2-tiny-1k-224",
-  "revision": "unpinned",
+  "revision": "f4db009e63145e02b3c075aa64d90ce41bcca4b1",
   "files": [
     {
       "path": "README.md",
       "bytes": 3370,
-      "sha256": null
+      "sha256": "521120d944cf882870fa07c3f63e584778c993d1986bc9542e8bd0122a1e6f30"
     },
     {
       "path": "config.json",
       "bytes": 69724,
-      "sha256": null
+      "sha256": "f7674180aaa6ff41308f448cc06a252e7f95a959b4f93d2b57c721d473e64069"
     },
     {
       "path": "preprocessor_config.json",
       "bytes": 352,
-      "sha256": null
+      "sha256": "9ef34d18dbf7909143a91f05ad23457180fcfed05034bf94843f300e32a9b968"
     },
     {
       "path": "model.safetensors",
       "bytes": 114565784,
-      "sha256": null
+      "sha256": "ac05396e9e8b222e43be9fff080b464c3cccaa54800923d04a7d20182d2fdf5f"
     }
   ],
   "totalBytes": 114639230,
@@ -31,13 +31,13 @@
     {
       "path": "pytorch_model.bin",
       "bytes": 114608874,
-      "sha256": null,
+      "sha256": "a17bec401ab6b289dbb27f89f373305a700cb7fd1defa64df479ad465ff09505",
       "note": "pickle checkpoint of the same weights; not staged, not loaded; its Hub LFS SHA-256 is recorded for provenance only"
     },
     {
       "path": "tf_model.h5",
       "bytes": 114787096,
-      "sha256": null,
+      "sha256": "7493752886740e93460a9c979c07a80293a4e8a608bd6c8944e4916c9308fb28",
       "note": "hosted TensorFlow checkpoint; not staged, not loaded; its Hub LFS SHA-256 is recorded for provenance only"
     }
   ]

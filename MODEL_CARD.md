@@ -22,7 +22,7 @@ date_published_source: "month of the ConvNeXt V2 paper and code release (arXiv:2
 > **Non-commercial weights.** The upstream `ConvNeXt-V2` repository releases its ImageNet pre-trained and fine-tuned models under **CC-BY-NC-4.0**. The Hugging Face card for this converted checkpoint is tagged Apache-2.0; this card follows the more restrictive upstream licence, and treats any adapter fine-tuned from these weights the same way. Commercial use needs its own legal review.
 
 > [!IMPORTANT]
-> The upstream snapshot is **not yet pinned**. `MODEL_REVISION` is the sentinel `"unpinned"` and the manifest records no SHA-256 digests. Until `python tools/pin_snapshot.py` records an immutable commit and every file's digest, the package refuses to stage, verify or load the weights, and the tutorial cannot run.
+> The upstream snapshot is pinned to Hub commit `f4db009e63145e02b3c075aa64d90ce41bcca4b1`, and the manifest records every file's SHA-256. No execution with the pinned weights has been recorded yet, so this card claims no measured value for this repository.
 
 ---
 
@@ -46,7 +46,7 @@ This repository adds gradient fine-tuning on a caller's labelled images. `from_p
 
 What this repository adds to the upstream weights:
 
-- `verify_snapshot` and `stage_missing_files`: manifest checks and staging of the pinned files, both refusing to run while the snapshot is unpinned;
+- `verify_snapshot` and `stage_missing_files`: manifest checks and staging of the pinned files, both refusing to run if `MODEL_REVISION` is ever reset to the `"unpinned"` sentinel;
 - `ConvNextV2Pipeline.from_pretrained`: construction of `ConvNextV2ForImageClassification` from the verified `config.json`, then `load_state_dict(strict=True)` from the verified SafeTensors file, and a check that the config's labels at the zero-shot group indices are the expected ImageNet classes;
 - `predict`: input checks and top-k softmax scores; `zero_shot_evaluate`: a baseline that maps groups of ImageNet classes onto task labels without training;
 - `fetch_sample_archive`, `read_class_archive`, `read_class_folder`, `validate_dataset`, `split_dataset`, `validate_inputs` and `evaluation_report`: the data acquisition, validation and single-batch evaluation stages;
@@ -168,7 +168,7 @@ Some sensitive uses are foreseeable although not intended: triage of medical or 
 
 ###### Mitigations
 
-- **Supply-chain integrity:** while `MODEL_REVISION` is `"unpinned"`, `verify_snapshot`, `stage_missing_files` and `from_pretrained` raise before any download or model import. Once pinned, `stage_missing_files` refuses a manifest whose `modelId` or `revision` differs from the package constants. It fetches only manifest-listed files, and only with `allow_download=True`. `verify_snapshot` checks every file's byte size and SHA-256 and refuses an entry with no recorded digest. `from_pretrained` builds the architecture from the verified `config.json` and loads the verified SafeTensors file with `strict=True`. The Hub repository also holds `pytorch_model.bin` (a pickle) and `tf_model.h5`; neither is staged or loaded, and the pin tool records their Hub LFS digests for provenance only.
+- **Supply-chain integrity:** if `MODEL_REVISION` were reset to `"unpinned"`, `verify_snapshot`, `stage_missing_files` and `from_pretrained` would raise before any download or model import. At the pinned revision, `stage_missing_files` refuses a manifest whose `modelId` or `revision` differs from the package constants. It fetches only manifest-listed files, and only with `allow_download=True`. `verify_snapshot` checks every file's byte size and SHA-256 and refuses an entry with no recorded digest. `from_pretrained` builds the architecture from the verified `config.json` and loads the verified SafeTensors file with `strict=True`. The Hub repository also holds `pytorch_model.bin` (a pickle) and `tf_model.h5`; neither is staged or loaded, and the pin tool records their Hub LFS digests for provenance only.
 - **Data integrity:** `fetch_sample_archive` downloads the sample at a fixed dataset commit and checks its size and SHA-256 before it is opened, with no fallback. `read_class_archive` refuses absolute member names and `..` segments and bounds the member count and the uncompressed size before decompressing anything; `read_class_folder` refuses files that link outside the directory.
 - **Tests of those refusals:** tests assert that an unpinned package, a missing snapshot and a tampered digest are all refused before `torch`, `transformers` or `safetensors` is imported. Others assert that a full-size checkpoint strict-loads and that a missing tensor or a drifted config is refused, that the label check refuses a shifted ImageNet order, that the pipeline's transform equals the Transformers processor built from the committed `preprocessor_config.json`, and that a frozen fine-tune leaves every backbone weight unchanged.
 - **Input integrity:** `validate_inputs` and `predict` share one checker for type, batch size, image size and `top_k`. `validate_dataset` rejects a record with missing keys, a non-image, an out-of-range image, an unknown label or a class with fewer than 2 images. It reports class imbalance and pixel-identical duplicates as findings.
@@ -202,11 +202,11 @@ The following uses are prohibited even where the model would work:
 ## Immutable provenance
 
 - Model: `facebook/convnextv2-tiny-1k-224`
-- Revision: **not yet pinned** (`MODEL_REVISION = "unpinned"`). `python tools/pin_snapshot.py` resolves the Hub's `main` to a 40-hex commit, downloads every manifest file at that commit, records each file's SHA-256, and records the Hub's LFS SHA-256 of the two reference files without downloading them.
-- Snapshot manifest: `weights/convnextv2-tiny-1k-224/dimer-base-manifest.json`, 4 staged files, `totalBytes` 114639230, plus two reference files. The byte sizes are the ones the Hub reported for its `main` branch when this repository was built.
-- `model.safetensors` (executed artifact): 114,565,784 bytes; SHA-256 not yet recorded.
-- `pytorch_model.bin` (pickle of the same weights, reference only): 114,608,874 bytes; never staged or loaded; SHA-256 not yet recorded.
-- `tf_model.h5` (hosted TensorFlow checkpoint, reference only): 114,787,096 bytes; never staged or loaded; SHA-256 not yet recorded.
+- Revision: `f4db009e63145e02b3c075aa64d90ce41bcca4b1` (pinned 2026-09-25 by `python tools/pin_snapshot.py`, which resolved the Hub's `main` to this commit, downloaded every manifest file at it, recorded each file's SHA-256, and recorded the Hub's LFS SHA-256 of the two reference files without downloading them).
+- Snapshot manifest: `weights/convnextv2-tiny-1k-224/dimer-base-manifest.json`, 4 staged files, `totalBytes` 114639230, plus two reference files. The byte sizes and digests describe the files at the pinned commit.
+- `model.safetensors` (executed artifact): 114,565,784 bytes; SHA-256 `ac05396e9e8b222e43be9fff080b464c3cccaa54800923d04a7d20182d2fdf5f` (matches the Hub's LFS record).
+- `pytorch_model.bin` (pickle of the same weights, reference only): 114,608,874 bytes; never staged or loaded; Hub LFS SHA-256 `a17bec401ab6b289dbb27f89f373305a700cb7fd1defa64df479ad465ff09505`.
+- `tf_model.h5` (hosted TensorFlow checkpoint, reference only): 114,787,096 bytes; never staged or loaded; Hub LFS SHA-256 `7493752886740e93460a9c979c07a80293a4e8a608bd6c8944e4916c9308fb28`.
 - `config.json`: 69,724 bytes; `ConvNextV2ForImageClassification`, depths 3, 3, 9, 3, widths 96, 192, 384, 768, patch 4, 1000 labels.
 - `preprocessor_config.json`: 352 bytes; `ConvNextImageProcessor`, shortest edge 224, `crop_pct` 0.875, bicubic, ImageNet mean and standard deviation.
 - `README.md`: 3,370 bytes; the upstream model card.

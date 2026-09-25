@@ -2,7 +2,7 @@
 
 `tutorials/convnextv2_classification_colab.ipynb` (`E2E`, **standalone** carrier) is a **release candidate** until the exact notebook revision has executed top-to-bottom in a clean supported runtime. Unit tests, the tiny-model test, JSON validation, code-cell compilation, the generator parity checks and `tools/validate_release_assets.py` are necessary checks but are **not** runtime evidence under DIMER Notebook Specification 2.1 (REL8). This file is the durable release-gate record for the notebook.
 
-The upstream snapshot is not yet pinned, so the notebook cannot run yet: its model cell raises before any download. Pinning (`python tools/pin_snapshot.py`) and regenerating the notebook come before any execution recorded here.
+The upstream snapshot is pinned to `f4db009e63145e02b3c075aa64d90ce41bcca4b1` and the notebook is regenerated with that revision and manifest, so it can run; no execution is recorded yet.
 
 ## Automatic coverage (static and unit, every pull request)
 
@@ -37,4 +37,4 @@ Notebook identity is the Git blob id of `tutorials/convnextv2_classification_col
 
 | Date (UTC) | Subject (commit / notebook blob) | Runtime | Procedure | Observed result | Caveats |
 |---|---|---|---|---|---|
-| — | — | — | — | No execution recorded. The snapshot is not yet pinned. | — |
+| — | — | — | — | No execution recorded yet. | — |
