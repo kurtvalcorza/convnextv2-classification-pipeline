@@ -1,0 +1,44 @@
+{
+  "format": "dimer_hf_snapshot",
+  "formatVersion": 1,
+  "modelKey": "convnextv2-tiny-1k-224",
+  "modelId": "facebook/convnextv2-tiny-1k-224",
+  "revision": "unpinned",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3370,
+      "sha256": null
+    },
+    {
+      "path": "config.json",
+      "bytes": 69724,
+      "sha256": null
+    },
+    {
+      "path": "preprocessor_config.json",
+      "bytes": 352,
+      "sha256": null
+    },
+    {
+      "path": "model.safetensors",
+      "bytes": 114565784,
+      "sha256": null
+    }
+  ],
+  "totalBytes": 114639230,
+  "referenceFiles": [
+    {
+      "path": "pytorch_model.bin",
+      "bytes": 114608874,
+      "sha256": null,
+      "note": "pickle checkpoint of the same weights; not staged, not loaded; its Hub LFS SHA-256 is recorded for provenance only"
+    },
+    {
+      "path": "tf_model.h5",
+      "bytes": 114787096,
+      "sha256": null,
+      "note": "hosted TensorFlow checkpoint; not staged, not loaded; its Hub LFS SHA-256 is recorded for provenance only"
+    }
+  ]
+}
