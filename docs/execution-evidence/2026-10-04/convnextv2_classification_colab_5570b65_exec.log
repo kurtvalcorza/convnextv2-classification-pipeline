@@ -1,0 +1,223 @@
+[colab] Parsing notebook '/home/kurt/colab-runs/convnextv2-classification-pipeline-5570b65-10036a/convnextv2_classification_colab_5570b65_colab-cli-t4.ipynb'...
+[colab] Executing cell 1/16 - Infrastructure: install the locked runtime into an isolated environment...
+{'isolated_environment': '/content/dimer_isolated_env', 'isolated_python': '3.12.12', 'kernel_python': '3.13.15', 'locked_packages': 46, 'setup_seconds': 56}
+[colab] Executing cell 2/16 - Route the remaining cells to the isolated environment...
+Every later code cell now runs in /content/dimer_isolated_env/bin/python (pid 1764).
+[colab] Executing cell 3/16 - convnextv2_classification-07...
+{'notebook_source': {'repository': 'convnextv2-classification-pipeline', 'repository_revision': 'e85d891f33eaaaf8c6823d8be75fb80fcde4b015', 'embedded_module': 'src/convnextv2_classification_pipeline/pipeline.py', 'embedded_modules': ['src/convnextv2_classification_pipeline/data.py', 'src/convnextv2_classification_pipeline/pipeline.py'], 'module_sha256': '5f3e608a7a848356914b55fabe34549c9aeec851b9b9b6e3f38fa5f035e80ecb', 'generator': 'build_notebook.py/2.1', 'notebook_spec': '2.2'}, 'python': '3.12.12', 'torch': '2.14.0+cu130', 'torchvision': '0.29.0+cu130', 'transformers': '4.57.6', 'numpy': '2.5.3', 'PIL': '11.3.0', 'cuda': True}
+[colab] Executing cell 4/16 - convnextv2_classification-09...
+[colab] Executing cell 5/16 - convnextv2_classification-11...
+[colab] Executing cell 6/16 - convnextv2_classification-13...
+{'model_id': 'facebook/convnextv2-tiny-1k-224', 'revision': 'f4db009e63145e02b3c075aa64d90ce41bcca4b1', 'license': 'cc-by-nc-4.0', 'files': 4, 'total_bytes': 114639230}
+{'weights_dir': '/content/weights/convnextv2-tiny-1k-224', 'fetched': ['README.md', 'config.json', 'preprocessor_config.json', 'model.safetensors']}
+{'verified_files': 4, 'revision': 'f4db009e63145e02b3c075aa64d90ce41bcca4b1'}
+{'device': 'cuda:0', 'source': '/content/weights/convnextv2-tiny-1k-224'}
+[colab] Executing cell 7/16 - convnextv2_classification-15...
+{'dataset_id': 'Cleanlab/cifar-10-subset', 'revision': 'bb5a7aabf1d14d2d1e3e49d0d8f917bda3622f75', 'license': 'mit', 'bytes': 986707, 'sha256': '66f90a4f87d865e8eb653b62f10e754684075a32314177de76832349d4b1fb19', 'fetched': True}
+{
+  "n_records": 400,
+  "class_names": [
+    "frog",
+    "truck"
+  ],
+  "images_per_class": {
+    "frog": 200,
+    "truck": 200
+  },
+  "image_side_px": [
+    32,
+    32
+  ],
+  "duplicate_groups": 100,
+  "epochs": 5,
+  "findings": [
+    "100 group(s) of pixel-identical images, e.g. ['CIFAR-10-subset/darkened_images/truck/image_0.png', 'CIFAR-10-subset/original_images/truck/image_0.png']"
+  ],
+  "verdict": "accepted"
+}
+{
+  "records": 400,
+  "groups": 200,
+  "groups_with_duplicates": 200,
+  "records_in_duplicate_groups": 400,
+  "exact_copies": 100,
+  "near_duplicate_links": 100,
+  "mixed_label_groups": 0,
+  "mixed_label_examples": [],
+  "method": "pixel digest, or 16x16 grayscale correlation >= 0.95"
+}
+<PIL.Image.Image image mode=RGB size=512x128 at 0x79822425DA60>
+
+[Image saved to: /tmp/tmpfnaclobs.png]
+[colab] Executing cell 8/16 - convnextv2_classification-17...
+{
+  "train": 280,
+  "held_out": 60,
+  "unseen": 60,
+  "train_majority": "frog",
+  "duplicates_across_splits": {
+    "held_out": {
+      "records": 60,
+      "pixel_copy_in_reference": 0,
+      "near_duplicate_in_reference": 0
+    },
+    "unseen": {
+      "records": 60,
+      "pixel_copy_in_reference": 0,
+      "near_duplicate_in_reference": 0
+    },
+    "unseen_vs_held_out": {
+      "records": 60,
+      "pixel_copy_in_reference": 0,
+      "near_duplicate_in_reference": 0
+    }
+  }
+}
+frog -> [('tailed frog', 0.592), ('fox squirrel', 0.044), ('marmoset', 0.026), ('frilled lizard', 0.016), ('sidewinder', 0.012)]
+frog -> [('tailed frog', 0.637), ('fox squirrel', 0.116), ('marmoset', 0.036), ('frilled lizard', 0.029), ('barn spider', 0.009)]
+truck -> [('moving van', 0.267), ('boathouse', 0.111), ('amphibian', 0.091), ('snowplow', 0.073), ('mobile home', 0.048)]
+truck -> [('moving van', 0.267), ('boathouse', 0.111), ('amphibian', 0.091), ('snowplow', 0.073), ('mobile home', 0.048)]
+{'verdict': 'sample-sanity', 'metrics': [(1, 1.0), (5, 1.0)]}
+{
+  "accuracy": 1.0,
+  "balanced_accuracy": 1.0,
+  "majority_baseline_accuracy": 0.5,
+  "mean_group_mass": 0.45333585143089294,
+  "per_class_recall": {
+    "frog": 1.0,
+    "truck": 1.0
+  }
+}
+[colab] Executing cell 9/16 - convnextv2_classification-19...
+{
+  "blank": [
+    [
+      "hook",
+      0.009
+    ],
+    [
+      "corkscrew",
+      0.008
+    ],
+    [
+      "kite",
+      0.007
+    ]
+  ],
+  "noise": [
+    [
+      "kite",
+      0.129
+    ],
+    [
+      "parachute",
+      0.045
+    ],
+    [
+      "bald eagle",
+      0.041
+    ]
+  ]
+}
+[colab] Executing cell 10/16 - convnextv2_classification-21...
+{'class_names': ['frog', 'truck'], 'reinitialised': ['classifier.'], 'device': 'cuda:0'}
+{'accuracy': 0.8666666666666667, 'balanced_accuracy': 0.8666666666666667, 'per_class_recall': {'frog': 0.8666666666666667, 'truck': 0.8666666666666667}}
+[colab] Executing cell 11/16 - convnextv2_classification-23...
+epoch 1/5  loss 0.1347
+epoch 2/5  loss 0.0022
+epoch 3/5  loss 0.0005
+epoch 4/5  loss 0.0003
+epoch 5/5  loss 0.0002
+{
+  "freeze_backbone": false,
+  "trainable_parameters": 27868034,
+  "total_parameters": 27868034,
+  "epochs": 5,
+  "batch_size": 16,
+  "learning_rate": 0.0001,
+  "optimizer": "AdamW",
+  "augmentation": "none (evaluation transform)",
+  "precision": "float32",
+  "device": "cuda:0",
+  "train_seconds": 32.0
+}
+[colab] Executing cell 12/16 - convnextv2_classification-25...
+method                         correct  accuracy      95% Wilson  balanced
+majority class                   30/60     0.500  [0.377, 0.623]     0.500
+zero-shot ImageNet mapping       60/60     1.000  [0.940, 1.000]     1.000
+untrained two-class head         52/60     0.867  [0.758, 0.931]     0.867
+fine-tuned                       59/60     0.983  [0.911, 0.997]     0.983
+confusion (rows true, columns predicted): {'labels': ['frog', 'truck'], 'rows_true_cols_predicted': [[29, 1], [0, 30]]}
+reading: at ceiling: the zero-shot mapping already answers 60/60 held-out images correctly, so the fine-tune (59/60) can at best tie it; this run measures no fine-tuning gain
+{'run': 0, 'freeze_backbone': False, 'per_class': 200, 'epochs': 5, 'learning_rate': 0.0001, 'trainable_parameters': 27868034, 'held_out_n': 60, 'zero_shot_accuracy': 1.0, 'fine_tuned_accuracy': 0.9833, 'final_loss': 0.0002, 'train_seconds': 32.0}
+[colab] Executing cell 13/16 - convnextv2_classification-27...
+{'correct': 60, 'n': 60, 'accuracy': 1.0, 'wilson_95': [0.9398, 1.0], 'balanced_accuracy': 1.0}
+[
+  {
+    "id": "CIFAR-10-subset/darkened_images/frog/image_15.png",
+    "truth": "frog",
+    "predicted": "frog",
+    "score": 0.9999
+  },
+  {
+    "id": "CIFAR-10-subset/original_images/frog/image_15.png",
+    "truth": "frog",
+    "predicted": "frog",
+    "score": 0.9999
+  },
+  {
+    "id": "CIFAR-10-subset/darkened_images/frog/image_75.png",
+    "truth": "frog",
+    "predicted": "frog",
+    "score": 0.9999
+  },
+  {
+    "id": "CIFAR-10-subset/original_images/frog/image_75.png",
+    "truth": "frog",
+    "predicted": "frog",
+    "score": 0.9997
+  },
+  {
+    "id": "CIFAR-10-subset/darkened_images/frog/image_58.png",
+    "truth": "frog",
+    "predicted": "frog",
+    "score": 0.9999
+  },
+  {
+    "id": "CIFAR-10-subset/original_images/frog/image_58.png",
+    "truth": "frog",
+    "predicted": "frog",
+    "score": 0.9999
+  }
+]
+{'blank': [('frog', 0.925), ('truck', 0.075)], 'noise': [('frog', 0.774), ('truck', 0.226)]}
+[colab] Executing cell 14/16 - convnextv2_classification-29...
+{
+  "path": "outputs/convnextv2_adapter.safetensors",
+  "bytes": 111496184,
+  "sha256": "d5b3407e24af8fc387d355be73b0634085392ad4a19a791883d25bc5f5b07311",
+  "format": "convnextv2-adapter-v1",
+  "class_names": [
+    "frog",
+    "truck"
+  ],
+  "tensors": 200,
+  "frozen_prefixes": [],
+  "base_state_digest": "ac05396e9e8b222e43be9fff080b464c3cccaa54800923d04a7d20182d2fdf5f",
+  "model_id": "facebook/convnextv2-tiny-1k-224",
+  "model_revision": "f4db009e63145e02b3c075aa64d90ce41bcca4b1"
+}
+{'reloaded_source': 'artifact:convnextv2_adapter.safetensors', 'adapted': True, 'class_names': ['frog', 'truck']}
+{'images_compared': 60, 'tolerance': 0.0001, 'equivalent': True}
+[colab] Executing cell 15/16 - convnextv2_classification-31...
+  convnextv2_adapter.safetensors                    111,496,184 bytes
+  convnextv2_classification_evaluation_report.json          794 bytes
+  convnextv2_classification_input_manifest.json           1,352 bytes
+  convnextv2_classification_predictions.csv              15,367 bytes
+  convnextv2_classification_result.json                  13,401 bytes
+[colab] Executing cell 16/16 - convnextv2_classification-33...
+refused as expected: non-image object -> TypeError: images must be a PIL.Image.Image or a sequence of them
+refused as expected: class with one image -> ValueError: every class needs at least 2 images to split; short classes: {'frog': 1, 'truck': 1}
+BYOD image branch is off; set USE_BYOD_IMAGE = True to classify your own image.
+BYOD dataset branch is off; set USE_BYOD_DATASET = True to adapt ConvNeXt V2 Tiny on your own class folders.
+[colab] Saving notebook with outputs to '/home/kurt/colab-runs/convnextv2-classification-pipeline-5570b65-10036a/convnextv2_classification_colab_5570b65_colab-cli-t4_output.ipynb'...
