@@ -4,7 +4,7 @@ DIMER pipeline for **ConvNeXt V2 Tiny** (`facebook/convnextv2-tiny-1k-224`), a p
 
 > **Non-commercial weights.** The upstream `ConvNeXt-V2` repository releases its ImageNet models under **CC-BY-NC-4.0**, although the Hugging Face card is tagged Apache-2.0. This repository follows the upstream licence; see `MODEL_CARD.md`. The pipeline loads the checkpoint only from a digest-verified local snapshot, returns top-k softmax scores over the ImageNet-1k classes, and adds a bounded fine-tuning workflow that replaces the head for a new set of classes, compares it with majority-class and zero-shot baselines, and exports a SafeTensors adapter.
 
-> **The upstream snapshot is pinned** to Hub commit `f4db009e63145e02b3c075aa64d90ce41bcca4b1` (pinned 2026-09-25). The manifest records every file's byte size and SHA-256, and each LFS digest matched the Hub's record. Default-path execution recorded on 2026-09-26 (Kaggle T4); REL12 BYOD exercise pending before promotion (see [Release status](#release-status)).
+> **The upstream snapshot is pinned** to Hub commit `f4db009e63145e02b3c075aa64d90ce41bcca4b1` (pinned 2026-09-25). The manifest records every file's byte size and SHA-256, and each LFS digest matched the Hub's record. A Kaggle T4 default-path run on 2026-09-26 completed only after a manual restart (not a one-pass `Run all`); the 2026-10-04 review-fix revision has no hosted run yet; REL12 BYOD exercise pending (see [Release status](#release-status)).
 
 ## Upstream alignment
 
@@ -22,7 +22,8 @@ DIMER pipeline for **ConvNeXt V2 Tiny** (`facebook/convnextv2-tiny-1k-224`), a p
 ```python
 from PIL import Image
 from convnextv2_classification_pipeline import (
-    SAMPLE_CLASSES, ConvNextV2Pipeline, fetch_sample_archive, majority_class, read_class_archive, split_dataset,
+    SAMPLE_CLASSES, ConvNextV2Pipeline, assign_duplicate_groups, fetch_sample_archive, majority_class,
+    read_class_archive, split_dataset,
 )
 
 pipe = ConvNextV2Pipeline.from_pretrained(allow_download=True)   # stages + verifies weights/convnextv2-tiny-1k-224
@@ -30,7 +31,8 @@ print(pipe.predict(Image.open("photo.jpg"), top_k=5)["predictions"][0]["top_k"])
 
 info = fetch_sample_archive("data", allow_download=True)             # pinned archive, SHA-256 checked
 records = read_class_archive(info["path"], classes=SAMPLE_CLASSES)
-train, held_out = split_dataset(records, train_fraction=0.7)
+records, _summary = assign_duplicate_groups(records)                # copies of one photograph share a group
+train, held_out = split_dataset(records, train_fraction=0.7, group_key="group")
 adapter = ConvNextV2Pipeline.from_pretrained(class_names=SAMPLE_CLASSES)
 adapter.finetune(train)                                               # 5 epochs, whole network
 print(adapter.evaluate(held_out, majority=majority_class(train)))     # accuracy, balanced accuracy, baseline
@@ -67,11 +69,11 @@ weights/convnextv2-tiny-1k-224/
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kurtvalcorza/convnextv2-classification-pipeline/blob/main/tutorials/convnextv2_classification_colab.ipynb)
 
-`tutorials/convnextv2_classification_colab.ipynb` is declared `E2E` / `GUIDED` under DIMER Notebook Specification 2.1 and is **standalone** (§4): `tools/build_notebook.py` generates it, and it carries the package modules, the model identity, the manifest and the runtime pins, so it runs without this repository. Its default `Run all` path downloads and verifies the pinned CIFAR-10 subset, measures the majority-class and zero-shot ImageNet baselines, probes a blank and a noise image, fine-tunes, evaluates the held-out split, classifies an unseen split, and exports and reloads the adapter. BYOD image and dataset branches are off by default. See `tutorials/README.md` and `docs/release-verification.md`.
+`tutorials/convnextv2_classification_colab.ipynb` is declared `E2E` / `GUIDED` under DIMER Notebook Specification 2.2 and is **standalone** (§4); since 2026-10-04 the tutorial builds its own isolated `uv` Python 3.12.12 environment from the hash-locked `tutorials/requirements-colab.lock.txt` and runs every later cell there, so nothing is installed into the kernel and `Run all` needs no restart (**Linux x86_64 runtimes only**): `tools/build_notebook.py` generates it, and it carries the package modules, the model identity, the manifest and the runtime pins, so it runs without this repository. Its default `Run all` path downloads and verifies the pinned CIFAR-10 subset, groups its 200 duplicate and darkened pairs so that no photograph lands on both sides of the split, measures the majority-class and zero-shot ImageNet baselines, probes a blank and a noise image, fine-tunes, evaluates the held-out split with counts and 95% Wilson intervals (zero-shot is already at ceiling on frog versus truck, and the notebook says so), classifies an unseen split, and exports and reloads the adapter. BYOD image and dataset branches are off by default. See `tutorials/README.md` and `docs/release-verification.md`.
 
 ## Release status
 
-**Candidate.** The snapshot is pinned (`f4db009`). Default-path execution recorded on 2026-09-26 (Kaggle T4): the exact notebook blob `f7d1d0f11ae1` (commit `8356fef`) ran top-to-bottom with both BYOD branches off. On one seeded split of 60 held-out CIFAR-10 thumbnails, accuracy was 1.000 for both the zero-shot ImageNet mapping and the fine-tuned head (majority baseline 0.500, untrained head 0.8167), so the fine-tune shows no measurable gain there; one runtime. REL12 BYOD exercise pending before promotion: release step 7 has not been run. Static checks, unit tests and the small-model test do not constitute notebook execution evidence; `docs/release-verification.md` defines the release gate.
+**Candidate.** The snapshot is pinned (`f4db009`). The default-path execution recorded on 2026-09-26 (Kaggle T4, exact notebook blob `f7d1d0f11ae1`, commit `8356fef`, both BYOD branches off) needed a manual restart after the install cell, so it is not a one-pass `Run all` and not promotion evidence; its split was not duplicate-aware. The 2026-10-04 review-fix revision (uv isolated environment, duplicate-aware split, guided layer) has a local CPU check only and needs a one-pass hosted run. On one seeded split of 60 held-out CIFAR-10 thumbnails, accuracy was 1.000 for both the zero-shot ImageNet mapping and the fine-tuned head (majority baseline 0.500, untrained head 0.8167), so the fine-tune shows no measurable gain there; one runtime. REL12 BYOD exercise pending before promotion: release step 7 has not been run. Static checks, unit tests and the small-model test do not constitute notebook execution evidence; `docs/release-verification.md` defines the release gate.
 
 ## Documentation
 

@@ -22,7 +22,7 @@ date_published_source: "month of the ConvNeXt V2 paper and code release (arXiv:2
 > **Non-commercial weights.** The upstream `ConvNeXt-V2` repository releases its ImageNet pre-trained and fine-tuned models under **CC-BY-NC-4.0**. The Hugging Face card for this converted checkpoint is tagged Apache-2.0; this card follows the more restrictive upstream licence, and treats any adapter fine-tuned from these weights the same way. Commercial use needs its own legal review.
 
 > [!IMPORTANT]
-> The upstream snapshot is pinned to Hub commit `f4db009e63145e02b3c075aa64d90ce41bcca4b1`, and the manifest records every file's SHA-256. Default-path execution recorded on 2026-09-26 (Kaggle T4); REL12 BYOD exercise pending before promotion. The measured values under Metrics come from that one run: one seeded split of 60 held-out and 60 unseen CIFAR-10 thumbnails (frog and truck), one runtime. They are tutorial evidence, not a benchmark.
+> The upstream snapshot is pinned to Hub commit `f4db009e63145e02b3c075aa64d90ce41bcca4b1`, and the manifest records every file's SHA-256. A default-path execution was recorded on 2026-09-26 (Kaggle T4); it needed a manual restart after the install cell, so it is not a one-pass `Run all`, and the tutorial now runs in an isolated `uv` environment instead (Linux x86_64 runtimes only). REL12 BYOD exercise pending before promotion. The measured values under Metrics come from that one run: one seeded split of 60 held-out and 60 unseen CIFAR-10 thumbnails (frog and truck), one runtime. They are tutorial evidence, not a benchmark.
 
 ---
 
@@ -137,7 +137,7 @@ Values measured by this repository (one run on Kaggle Tesla T4, 2026-09-26 UTC; 
 - **Degenerate probes:** the ImageNet head gave a blank image top-1 0.009 (`hook`) and noise 0.129 (`kite`); the adapted two-class head gave a blank image `frog` 0.971 and noise `frog` 0.895.
 - **Adapter reload:** 60 images compared, tolerance 0.0001, equivalent.
 
-The sample archive holds 100 groups of pixel-identical images and the tutorial's split is not duplicate-aware, so held-out and unseen images can have exact copies in the training split; the 1.000 scores are not evidence of generalisation. The BYOD branches were not exercised in this run.
+The sample archive holds each of its 200 photographs twice (100 pixel-identical pairs and 100 original/darkened pairs), and the split of that run was not duplicate-aware: 25 of the 60 held-out and 19 of the 60 unseen images had a pixel-identical copy in the training split, and 46 and 36 a copy of either kind (counted from the pixels). Since 2026-10-04 the tutorial groups the copies (`assign_duplicate_groups`), splits by group (`split_dataset(..., group_key="group")`) and checks from the pixels that no held-out or unseen image has a copy in training (`cross_split_duplicates`); on that split a CPU check of the pinned weights scored zero-shot 60/60 and fine-tuned 59/60 on the held-out images, still at ceiling. The 1.000 scores above are not evidence of generalisation. The BYOD branches were not exercised in this run.
 
 ###### Decision thresholds
 
@@ -197,7 +197,7 @@ Some sensitive uses are foreseeable although not intended: triage of medical or 
 - **Overfitting in adaptation.** A fine-tune on a few hundred images can score well on a held-out split from the same source and fail on anything else. The operator who deploys it bears the harm whenever training and deployment images differ.
 - **Misleading accuracy.** Accuracy on an imbalanced set can exceed the majority baseline by little while looking high. Reporting it without the baseline and balanced accuracy overstates quality.
 - **Automation bias.** High softmax scores invite trust that an uncalibrated score has not earned. Operators who skip review turn a model error into a decision error.
-- **Leakage through adaptation data.** A random split of records that share a source photograph or session puts near-duplicates on both sides. The resulting held-out score overstates quality; `validate_dataset` reports exact duplicates, and `split_dataset` documents that grouped data must be split by group.
+- **Leakage through adaptation data.** A random split of records that share a source photograph or session puts near-duplicates on both sides. The resulting held-out score overstates quality; `validate_dataset` reports exact duplicates, `assign_duplicate_groups` joins exact and near-duplicate copies, `split_dataset(..., group_key="group")` keeps each group on one side, and `cross_split_duplicates` counts copies across splits.
 
 ###### Use cases
 
@@ -239,7 +239,7 @@ The following uses are prohibited even where the model would work:
 
 ## Verification records
 
-Default-path execution recorded on 2026-09-26 (Kaggle T4): exact notebook blob `f7d1d0f11ae1` at commit `8356fef`, 276.9 s, 14/14 post-restart code cells, both BYOD branches off; measured values are under Metrics. REL12 BYOD exercise pending before promotion. The offline test suite runs a one-block-per-stage `ConvNextV2ForImageClassification` with random weights on 32 px inputs through prediction, the zero-shot baseline, full and frozen fine-tuning, evaluation and adapter reload; that exercises the code path and is not a result about this model. `docs/release-verification.md` holds the release gate and the record table.
+Default-path execution recorded on 2026-09-26 (Kaggle T4): exact notebook blob `f7d1d0f11ae1` at commit `8356fef`, 276.9 s, 14/14 code cells only after a manual restart following the install cell — not a one-pass `Run all`, not promotion evidence; both BYOD branches off; measured values are under Metrics. The 2026-10-04 revision of the tutorial (isolated `uv` environment, review fixes) has a CPU pre-flight only. REL12 BYOD exercise pending before promotion. The offline test suite runs a one-block-per-stage `ConvNextV2ForImageClassification` with random weights on 32 px inputs through prediction, the zero-shot baseline, full and frozen fine-tuning, evaluation and adapter reload; that exercises the code path and is not a result about this model. `docs/release-verification.md` holds the release gate and the record table.
 
 ## References
 
