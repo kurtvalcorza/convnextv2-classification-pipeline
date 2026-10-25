@@ -24,10 +24,11 @@ def test_timings_are_approximate_and_name_the_runtime():
 
 
 def test_historical_wording_records_every_hosted_run():
-    # Historical wording (2026-10-26): timings are records of the named hosted runs, never a promise; no run-status
-    # sentence; the third Colab T4 run (blob 5700491c) is named. Fails on PR #3 head 0910bfe.
+    # Historical wording (2026-10-26): timings are records of the named hosted runs, never a promise;
+    # no run-status sentence; the third Colab T4 run (blob 5700491c) is named. Fails on PR #3 head 0910bfe.
     md = _markdown()
-    for gone in ("takes about 2½ minutes", "A hosted run of this revision is pending", "exactly what to expect",
+    for gone in ("takes about 2½ minutes", "A hosted run of this revision is pending",
+                 "exactly what to expect",
                  "(about 1 minute)"):
         assert gone not in md, gone
     for quoted in ("`5700491c` on 2026-10-25: 150.7 s, 45 s, 32.3 s", "Your run may take a different time.",
