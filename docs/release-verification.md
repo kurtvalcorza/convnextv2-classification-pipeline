@@ -43,5 +43,5 @@ Notebook identity is the Git blob id of `tutorials/convnextv2_classification_col
 
 ## Tier C wording revision (2026-10-25)
 
-**Tier C wording revision (2026-10-25, branch `fix/convnextv2-classification-tier-c-2026-10-25`, code commit `8419f41`).** Markdown, header and metadata only: pretraining-overlap statement (DAT9), the hosted-timing sentence, run-labelled numbers (REL13), use notice, `notebook_kind` and IEEE references. The regenerated notebook blob `e3015ec91891bda5506efe3e15402f35d812adad` is **Candidate** and its hosted runs are **pending** (REL14); the 2026-10-04 Colab T4 run of `5570b65` is evidence for blob `042c8999` only.
+**Tier C wording revision (2026-10-25, branch `fix/convnextv2-classification-tier-c-2026-10-25`, code commit `8419f41`).** Markdown, header and metadata only: pretraining-overlap statement (DAT9), the hosted-timing sentence, run-labelled numbers (REL13), use notice, `notebook_kind`, IEEE references and the DIMER Notebook Specification 2.5 declaration. The regenerated notebook blob `ef5a609a5e8fcbc842bca82e3a56c0ade9330f86` is **Candidate** and its hosted runs are **pending** (REL14); the 2026-10-04 Colab T4 run of `5570b65` is evidence for blob `042c8999` only.
 
