@@ -1,0 +1,80 @@
+{
+  "repo": "convnextv2-classification-pipeline",
+  "sha": "0ac37aa829277d5246e2d5bb235184e4ba22d703",
+  "notebook": "tutorials/convnextv2_classification_colab.ipynb",
+  "blob": "ab9766b309588d06100fb313d1e8fb31013f60f2",
+  "gpu": "T4",
+  "session": "suite-convnextv2-0ac37aa-1003",
+  "started_utc": "2026-10-29T00:56:47+00:00",
+  "runner": "Colab CLI `colab exec -f` on a fresh session (not a browser Run all)",
+  "overrides": [
+    {
+      "name": "USE_BYOD_IMAGE",
+      "from": "False",
+      "to": "True"
+    },
+    {
+      "name": "BYOD_IMAGE_PATH",
+      "from": "\\\"\\\"",
+      "to": "'/etc/hostname'"
+    }
+  ],
+  "run_copy_blob": "b01b2dd08d70161871cc3677a06ce5dc2c7cdb0a",
+  "run_copy_sha256": "82a73a494a1451eb7f8a0c5831eb30fa52ffa1c018fac3ba6078f98c067cb137",
+  "run_copy_note": "refusal run: the run copy is the committed notebook with the listed assignment overrides, cut immediately after the refusal cell and re-serialised (nbformat layout); input_unchanged compares against that copy",
+  "truncated_after_cell": "convnextv2_classification-33",
+  "refusal_cell_ref": "convnextv2_classification-33",
+  "refusal_cell_index": 16,
+  "cells_dropped": 1,
+  "code_cells_dropped": 0,
+  "original_sha256": "6eb88d45eb8946867c3abcc39d76ccb2485742a0dda0cd6bbb3c2b5bf52e8eb0",
+  "status": "[suite-convnextv2-0ac37aa-1003] gpu-t4-s-usw4b1-24cm8gz60zr9x | Hardware: T4 | Shape: Standard | Variant: GPU | Status: IDLE",
+  "exec_exit_code": 0,
+  "stopped": true,
+  "stop_verified": true,
+  "wall_s": 123.2,
+  "input_unchanged": true,
+  "executed_file": "convnextv2_classification_colab_0ac37aa_colab-cli-t4_output.ipynb",
+  "log_cells": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "log_total": 16,
+  "code_cells": 16,
+  "executed_cells": 14,
+  "errors": [
+    {
+      "cell": "convnextv2_classification-33",
+      "ename": "IsolatedCellRefusal",
+      "evalue": "hostname: not an image PIL can open (cannot identify image file '/etc/hostname'); set BYOD_IMAGE_PATH to a .png, .jpg, .bmp or .webp file and run this cell again (the earlier results of this session and their outputs/ files were removed)."
+    }
+  ],
+  "execution_counts": [],
+  "sequential": null,
+  "executed_sha256": "4993364a9c24cb56683e516a78ec7dc5eca36fd9544144198748460227fc4d81",
+  "log_sequential_complete": true,
+  "mode": "expect_refusal",
+  "refusal_line": "Refused: hostname: not an image PIL can open (cannot identify image file '/etc/hostname'); set BYOD_IMAGE_PATH to a .png, .jpg, .bmp or .webp file and run this cell again (the earlier results of this session and their outputs/ files were removed).",
+  "halting_cell_index": 16,
+  "halting_cell_id": "convnextv2_classification-33",
+  "error_cells": [
+    16
+  ],
+  "refusal_fail_reasons": [],
+  "refusal_ok": true,
+  "verdict": "PASS"
+}
