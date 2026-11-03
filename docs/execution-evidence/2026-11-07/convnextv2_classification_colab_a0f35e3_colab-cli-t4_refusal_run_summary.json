@@ -1,0 +1,80 @@
+{
+  "repo": "convnextv2-classification-pipeline",
+  "sha": "a0f35e3e6d9a83b77914a54511bb09d5c86c67ab",
+  "notebook": "tutorials/convnextv2_classification_colab.ipynb",
+  "blob": "e2d169c38e397efc8a6f1df564a861010fd8ef54",
+  "gpu": "T4",
+  "session": "suite-convnextv2-a0f35e3-1003",
+  "started_utc": "2026-11-07T09:08:46+00:00",
+  "runner": "Colab CLI `colab exec -f` on a fresh session (not a browser Run all)",
+  "overrides": [
+    {
+      "name": "USE_BYOD_IMAGE",
+      "from": "False",
+      "to": "True"
+    },
+    {
+      "name": "BYOD_IMAGE_PATH",
+      "from": "\\\"\\\"",
+      "to": "'/etc/hostname'"
+    }
+  ],
+  "run_copy_blob": "652f40438c3b1aafbc01bacb11767b63ee54f2b6",
+  "run_copy_sha256": "72ea776b2027cde8bbcb6c550d74ad93910b78c38fe99c805aeaf2fdcb2ff3b3",
+  "run_copy_note": "refusal run: the run copy is the committed notebook with the listed assignment overrides, cut immediately after the refusal cell and re-serialised (nbformat layout); input_unchanged compares against that copy",
+  "truncated_after_cell": "convnextv2_classification-33",
+  "refusal_cell_ref": "convnextv2_classification-33",
+  "refusal_cell_index": 16,
+  "cells_dropped": 1,
+  "code_cells_dropped": 0,
+  "original_sha256": "537e9a8d2755eb766cf1f577abe4ecc803ec6a8e17ae7489ea9902f003a808fd",
+  "status": "[suite-convnextv2-a0f35e3-1003] gpu-t4-s-usw4b1-bcetv2mf8xrq | Hardware: T4 | Shape: Standard | Variant: GPU | Status: IDLE",
+  "exec_exit_code": 0,
+  "stopped": true,
+  "stop_verified": true,
+  "wall_s": 141.1,
+  "input_unchanged": true,
+  "executed_file": "convnextv2_classification_colab_a0f35e3_colab-cli-t4_output.ipynb",
+  "log_cells": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "log_total": 16,
+  "code_cells": 16,
+  "executed_cells": 14,
+  "errors": [
+    {
+      "cell": "convnextv2_classification-33",
+      "ename": "IsolatedCellRefusal",
+      "evalue": "hostname: not an image PIL can open (cannot identify image file '/etc/hostname'); set BYOD_IMAGE_PATH to a .png, .jpg, .bmp or .webp file and run this cell again (the earlier results of this session and their outputs/ files were removed)."
+    }
+  ],
+  "execution_counts": [],
+  "sequential": null,
+  "executed_sha256": "6cdaa8be89e3df2a920727583bafd921c2fb25b414825f958896434da1348e06",
+  "log_sequential_complete": true,
+  "mode": "expect_refusal",
+  "refusal_line": "Refused: hostname: not an image PIL can open (cannot identify image file '/etc/hostname'); set BYOD_IMAGE_PATH to a .png, .jpg, .bmp or .webp file and run this cell again (the earlier results of this session and their outputs/ files were removed).",
+  "halting_cell_index": 16,
+  "halting_cell_id": "convnextv2_classification-33",
+  "error_cells": [
+    16
+  ],
+  "refusal_fail_reasons": [],
+  "refusal_ok": true,
+  "verdict": "PASS"
+}

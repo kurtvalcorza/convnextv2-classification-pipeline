@@ -4,6 +4,8 @@
 
 The upstream snapshot is pinned to `f4db009e63145e02b3c075aa64d90ce41bcca4b1` and the notebook is regenerated with that revision and manifest, so it can run. One default-path execution is recorded below (2026-09-26, Kaggle T4); it completed only after a manual restart following the install cell, so it is **not a one-pass `Run all` and not promotion evidence**. Since 2026-10-04 (review fixes CN2-M1..M5, CN2-m1..m2) the notebook builds an isolated `uv` Python 3.12.12 environment from the hash-locked `tutorials/requirements-colab.lock.txt` (Linux x86_64 runtimes only), splits the sample by duplicate group and reports counts with 95% Wilson intervals; that revision (commit `5570b65` / blob `042c899984467b2f`) then ran in one pass with no restart on a fresh Colab Tesla T4 through the Colab CLI on 2026-10-04 (16/16 code cells, 0 errors; record below). Release step 7 (REL12) has not been exercised, so the status stays `Candidate`.
 
+**Current status (REL14, 2026-11-07): Candidate.** The current blob is `e2d169c3` (`main` at `a0f35e3`, PR #7, the lock-header text naming pillow 13.0.0). It differs from `08ef4efc` only in lock-header text (`git diff 6e4dd0e a0f35e3 -- tutorials/convnextv2_classification_colab.ipynb`): the header of `requirements-colab.lock.txt` and its copy in the install cell now name pillow 13.0.0 instead of 11.3.0, so the install cell's `LOCK_SHA256` changed, and the generator revision stamps moved from `0fdd6924075d` to `b5da536e1806`; no locked pin changed. On 2026-11-07 its default path (16/16 code cells, exit 0, 0 errors, one pass, no restart) and its scripted DAT20 refusal (one `Refused:` line at cell `convnextv2_classification-33`, no traceback) passed on a hosted Colab Tesla T4 (Colab CLI sequential execution, not a browser `Run all`; see "REL14 hosted runs of blob `e2d169c3` (2026-11-07)"). The remaining gates are REL12 (a hosted BYOD run with an accepted input) and REL2 (a browser run of the interactive journeys). Every earlier blob named below is history (REL14), including `08ef4efc` (`main` at `6e4dd0e`, the lock-upgrade revision of PRs #5 and #6), which was the current blob on 2026-11-03: its default path and its scripted DAT20 refusal passed on a hosted Colab Tesla T4 on 2026-11-02.
+
 ## Automatic coverage (static and unit, every pull request)
 
 CI installs the pinned CPU-only torch wheel and the other runtime pins, then runs:
@@ -46,7 +48,7 @@ Notebook identity is the Git blob id of `tutorials/convnextv2_classification_col
 
 ## Prose kept true across runs (2026-10-25)
 
-**Recorded.** The current blob is `tutorials/convnextv2_classification_colab.ipynb` `5700491c2140cee964c094a44c52d4ad42e9d9b0` (regenerated at `2511861`; markdown only). The timing paragraph is approximate: about 2½ minutes of wall time on a fresh Colab Tesla T4 with about 1 minute of environment build and about 32 s of fine-tune, from the one-pass Colab CLI runs of blob `042c8999` (2026-10-04: 144.5 s, setup 56 s, 32.0 s) and blob `ef5a609a` (2026-10-25: 142.8 s, setup 62 s, 31.9 s); the Kaggle T4 and local CPU figures of earlier blobs are approximate as well, the CPU ones labelled CPU only. No quoted metric differed between the runs. The blob is **Candidate**: that exact blob (commit `d08b3b0`) completed one pass with no restart and 0 errors on a fresh Colab Tesla T4 on 2026-10-25 (Colab CLI sequential execution, 16/16 code cells, 150.7 s wall; held-out zero-shot 60/60, fine-tuned 59/60, unseen 60/60; evidence in `docs/execution-evidence/2026-10-25/`). The paths this blob's runs cover: the default path only. The remaining gates are REL12 (a hosted BYOD run) and REL2 (a browser `Run all`). The 2026-10-25 run of `ef5a609a` and the 2026-10-04 run of `042c8999` are history for earlier blobs (REL14).
+**Recorded.** The then-current blob was `tutorials/convnextv2_classification_colab.ipynb` `5700491c2140cee964c094a44c52d4ad42e9d9b0` (regenerated at `2511861`; markdown only). The timing paragraph is approximate: about 2½ minutes of wall time on a fresh Colab Tesla T4 with about 1 minute of environment build and about 32 s of fine-tune, from the one-pass Colab CLI runs of blob `042c8999` (2026-10-04: 144.5 s, setup 56 s, 32.0 s) and blob `ef5a609a` (2026-10-25: 142.8 s, setup 62 s, 31.9 s); the Kaggle T4 and local CPU figures of earlier blobs are approximate as well, the CPU ones labelled CPU only. No quoted metric differed between the runs. The blob is **Candidate**: that exact blob (commit `d08b3b0`) completed one pass with no restart and 0 errors on a fresh Colab Tesla T4 on 2026-10-25 (Colab CLI sequential execution, 16/16 code cells, 150.7 s wall; held-out zero-shot 60/60, fine-tuned 59/60, unseen 60/60; evidence in `docs/execution-evidence/2026-10-25/`). The paths this blob's runs cover: the default path only. The remaining gates are REL12 (a hosted BYOD run) and REL2 (a browser `Run all`). The 2026-10-25 run of `ef5a609a` and the 2026-10-04 run of `042c8999` are history for earlier blobs (REL14).
 
 Evidence files for the 2026-10-25 default run of blob `5700491c`, copied from the run directory and redacted byte-wise (local run paths replaced by `<local-run-dir>`, the Colab CLI install path by `<colab-cli-tool-dir>`; no JSON re-serialised; the executed notebook's captured hash equals `run_summary.json` `executed_sha256`):
 
@@ -65,7 +67,7 @@ Evidence files for the 2026-10-25 default run of blob `5700491c`, copied from th
 
 **Tier C wording revision (2026-10-25, branch `fix/convnextv2-classification-tier-c-2026-10-25`, code commit `8419f41`).** Markdown, header and metadata only: pretraining-overlap statement (DAT9), the hosted-timing sentence, run-labelled numbers (REL13), use notice, `notebook_kind`, IEEE references and the DIMER Notebook Specification 2.5 declaration. The regenerated notebook blob `ef5a609a5e8fcbc842bca82e3a56c0ade9330f86` (commit `fa361a4`) is **Candidate**: that exact blob completed one pass with no restart and 0 errors on a fresh Colab Tesla T4 on 2026-10-25 (Colab CLI sequential execution, 16/16 code cells, 142.8 s wall; held-out zero-shot 60/60, fine-tuned 59/60, unseen 60/60; evidence in `docs/execution-evidence/2026-10-25/`). The paths this blob's runs cover: the default path only. The remaining gates are REL12 (a hosted BYOD run) and REL2 (a browser `Run all`). The 2026-10-04 Colab T4 run of `5570b65` is history for blob `042c8999` (REL14).
 
-The current blob `ab9766b3` (code commit `2dfacd0`) shows a refused BYOD input as one `Refused: <file>: <reason>` line with no traceback, removes the earlier run's results and `outputs/` files and stops Run all at that cell, while genuine failures keep their traceback (NOTEBOOK_SPEC DAT19/DAT20); its default path (2026-10-30; 16 code cells, exit 0, 0 errors) and its scripted DAT20 refusal (2026-10-29; `USE_BYOD_IMAGE=True;BYOD_IMAGE_PATH=/etc/hostname`: exactly one `Refused:` line at cell `convnextv2_classification-33`, no traceback, earlier cells clean, VM released) both passed on a hosted Colab Tesla T4 (Colab CLI `colab exec -f`, not a browser `Run all`). The remaining gates are REL12 (a hosted BYOD run with an accepted input) and REL2 (a browser run of the interactive journeys); earlier blobs' runs are history (REL14).
+Blob `ab9766b3` (code commit `2dfacd0`), which was the current blob on 2026-10-30 and is history now (REL14), shows a refused BYOD input as one `Refused: <file>: <reason>` line with no traceback, removes the earlier run's results and `outputs/` files and stops Run all at that cell, while genuine failures keep their traceback (NOTEBOOK_SPEC DAT19/DAT20); its default path (2026-10-30; 16 code cells, exit 0, 0 errors) and its scripted DAT20 refusal (2026-10-29; `USE_BYOD_IMAGE=True;BYOD_IMAGE_PATH=/etc/hostname`: exactly one `Refused:` line at cell `convnextv2_classification-33`, no traceback, earlier cells clean, VM released) both passed on a hosted Colab Tesla T4 (Colab CLI `colab exec -f`, not a browser `Run all`). The remaining gates are REL12 (a hosted BYOD run with an accepted input) and REL2 (a browser run of the interactive journeys); earlier blobs' runs are history (REL14).
 
 Evidence files for the 2026-10-25 default run of blob `ef5a609a`, copied from the run directory and redacted byte-wise (local run paths replaced by `<local-run-dir>`, the Colab CLI install path by `<colab-cli-tool-dir>`; no JSON re-serialised; the executed notebook's captured hash equals `run_summary.json` `executed_sha256`):
 
@@ -101,7 +103,7 @@ Drift (this run versus the prose's named-run values):
 
 Rule check: no expectation range, timing promise, run-status sentence or unlabelled run-derived number was found in the notebook prose.
 
-### Hosted Colab T4 runs of blob `ab9766b3` (2026-10-30)
+### Hosted Colab T4 runs of blob `ab9766b3` (2026-10-30; history, REL14)
 
 These runs executed the PR head `0ac37aa829277d5246e2d5bb235184e4ba22d703`, notebook `tutorials/convnextv2_classification_colab.ipynb` blob `ab9766b309588d06100fb313d1e8fb31013f60f2`, fetched at the 40-character SHA and Git-blob verified, with the Colab CLI (`colab exec -f`) on a fresh Colab Tesla T4 session (not a browser `Run all`). Each `run_summary.json` records `verdict` `PASS`, `exec_exit_code` 0, `input_unchanged` true and `stop_verified` true (the VM was released), and the SHA-256 of each executed notebook equals the summary's `executed_sha256`.
 
@@ -120,13 +122,13 @@ fine-tuned                       59/60     0.983  [0.911, 0.997]     0.983
 {'correct': 60, 'n': 60, 'accuracy': 1.0, 'wilson_95': [0.9398, 1.0], 'balanced_accuracy': 1.0}
 ```
 
-**DAT20 refusal record (2026-10-29, blob `ab9766b3`).** Overrides, set by `--set` on a copy of the blob: `USE_BYOD_IMAGE` `False` → `True` and `BYOD_IMAGE_PATH` `""` → `'/etc/hostname'` (the run copy differs from the blob in exactly those 2 source lines). The suite cut the run copy right after the refusing cell `convnextv2_classification-33`, dropping 1 cells (0 of them code cells), which reproduces `Run all` stopping at the first error; the cut copy is `run_copy.ipynb`, SHA-256 `82a73a494a1451eb7f8a0c5831eb30fa52ffa1c018fac3ba6078f98c067cb137` (Git blob `b01b2dd0`), equal to the summary's `run_copy_sha256`. The cut copy's earlier code cells completed without an error output; the refusing cell's only error output has `ename` `IsolatedCellRefusal` and no traceback, and its output holds exactly one `Refused:` line:
+**DAT20 refusal record (2026-10-29, blob `ab9766b3`).** Overrides, set by `--set` on a copy of the blob: `USE_BYOD_IMAGE` `False` → `True` and `BYOD_IMAGE_PATH` `""` → `'/etc/hostname'` (the run copy differs from the blob in exactly those 2 source lines). The suite cut the run copy right after the refusing cell `convnextv2_classification-33`, dropping 1 cell (not a code cell), which reproduces `Run all` stopping at the first error; the cut copy is `run_copy.ipynb`, SHA-256 `82a73a494a1451eb7f8a0c5831eb30fa52ffa1c018fac3ba6078f98c067cb137` (Git blob `b01b2dd0`), equal to the summary's `run_copy_sha256`. The cut copy's earlier code cells completed without an error output; the refusing cell's only error output has `ename` `IsolatedCellRefusal` and no traceback, and its output holds exactly one `Refused:` line:
 
 ```text
 Refused: hostname: not an image PIL can open (cannot identify image file '/etc/hostname'); set BYOD_IMAGE_PATH to a .png, .jpg, .bmp or .webp file and run this cell again (the earlier results of this session and their outputs/ files were removed).
 ```
 
-This run says nothing about the 1 cut cells, which did not run in it. Session `suite-convnextv2-0ac37aa-1003`, wall 123.2 s. Retained evidence: [`docs/execution-evidence/2026-10-29/`](execution-evidence/2026-10-29/).
+This run says nothing about the 1 cut cell, which did not run in it. Session `suite-convnextv2-0ac37aa-1003`, wall 123.2 s. Retained evidence: [`docs/execution-evidence/2026-10-29/`](execution-evidence/2026-10-29/).
 
 **Local-path redaction.** Local paths were replaced byte-wise by `<local-run-dir>` (and the Colab CLI install path by `<colab-cli-tool-dir>/`) before the first commit; each executed notebook and run copy was checked against its `run_summary.json` before any edit.
 
@@ -142,5 +144,99 @@ This run says nothing about the 1 cut cells, which did not run in it. Session `s
 | `convnextv2_classification_colab_0ac37aa_colab-cli-t4_refusal_exec.log` | `e9fe4f3599ae26934124361d06b6686e17a90156b7721760b030bce7ce5ff8b5` | `fda4d2eecbeef5651bd700c34af3745bb3386998f1f8c1f4afe492dc8bf8adea` (2 local-path replacements) |
 | `convnextv2_classification_colab_0ac37aa_colab-cli-t4_refusal_run_summary.json` | `c96304ab017d170840be56604020372f8e627b208b50032c9668f8c0eedbeb1f` | `c96304ab017d170840be56604020372f8e627b208b50032c9668f8c0eedbeb1f` (unchanged, no local path) |
 | `convnextv2_classification_colab_0ac37aa_colab-cli-t4_refusal_run_copy.ipynb` | `82a73a494a1451eb7f8a0c5831eb30fa52ffa1c018fac3ba6078f98c067cb137` | `82a73a494a1451eb7f8a0c5831eb30fa52ffa1c018fac3ba6078f98c067cb137` (unchanged, no local path) |
+
+Not exercised by these runs: an accepted BYOD input (REL12) and a browser `Run all` of the interactive journeys (REL2).
+
+### REL14 hosted runs of blob `08ef4efc` (2026-11-02; history, REL14)
+
+These 2 runs executed main `6e4dd0ea3fefe771fa77348f23f585a85b857594` (`tutorials/convnextv2_classification_colab.ipynb` blob `08ef4efc60edb28455135c2120fe94abda721c49`) as Colab CLI sequential executions (`colab exec -f`) on fresh Colab Tesla T4 VMs (session `suite-convnextv2-6e4dd0e-1003`), not a browser `Run all`. The Colab CLI version is not recorded in `exec.log` or `run_summary.json`. The saved notebooks have no execution counts; cell order is taken from `exec.log`. Each `run_summary.json` records the commit and notebook blob above, `verdict` `PASS`, `exec_exit_code` 0, `input_unchanged` true and `stop_verified` true (the VM was released); the SHA-256 of each executed notebook equals the summary's `executed_sha256`. Local paths in the exec logs are redacted byte-wise to `<local-run-dir>`; the notebooks and summaries carried none.
+
+| Date (UTC) | Commit / notebook blob | Executor | Path exercised | Code cells | Wall time | Outcome |
+|---|---|---|---|---:|---:|---|
+| 2026-11-02 16:21 | `6e4dd0e` / `08ef4efc` | Colab CLI sequential execution, fresh Colab Tesla T4 | default settings, no overrides | 16/16 | 127.6 s | **One pass, no restart, 0 errors**; [retained evidence](execution-evidence/2026-11-02/) |
+| 2026-11-02 16:24 | `6e4dd0e` / `08ef4efc` | Colab CLI sequential execution, fresh Colab Tesla T4 | scripted DAT20 refusal: `USE_BYOD_IMAGE` `False` → `True` and `BYOD_IMAGE_PATH` `""` → `'/etc/hostname'` | 16/16 of the cut copy | 130.2 s | **Refused as designed**: one `Refused:` line, no traceback, earlier cells clean; [retained evidence](execution-evidence/2026-11-02/) |
+
+Lines printed by the default run (quoted from the executed notebook):
+
+```text
+{'verified_files': 4, 'revision': 'f4db009e63145e02b3c075aa64d90ce41bcca4b1'}
+method                         correct  accuracy      95% Wilson  balanced
+majority class                   30/60     0.500  [0.377, 0.623]     0.500
+zero-shot ImageNet mapping       60/60     1.000  [0.940, 1.000]     1.000
+untrained two-class head         52/60     0.867  [0.758, 0.931]     0.867
+fine-tuned                       59/60     0.983  [0.911, 0.997]     0.983
+{'correct': 60, 'n': 60, 'accuracy': 1.0, 'wilson_95': [0.9398, 1.0], 'balanced_accuracy': 1.0}
+```
+
+Apart from timings, run ids, process ids, object addresses and the carried source revision, the printed output equals the 2026-10-30 default run of blob `ab9766b3` line for line, except the size of `convnextv2_classification_result.json` (13,404 bytes here, 13,406 then).
+
+**DAT20 refusal record (2026-11-02).** Overrides, set by `--set` on a copy of the blob: `USE_BYOD_IMAGE` `False` → `True` and `BYOD_IMAGE_PATH` `""` → `'/etc/hostname'` (the run copy differs from the blob in exactly those 2 source lines). The suite cut the run copy right after the refusing cell `convnextv2_classification-33`, dropping 1 cell (not a code cell), which reproduces `Run all` stopping at the first error; the cut copy is `run_copy.ipynb`, SHA-256 `99f035c71bd4644777b35e8133096a862864aadfe4e107ba7ad3c868b11bc94e` (Git blob `d2c47dd1`), equal to the summary's `run_copy_sha256`. The 15 earlier code cells completed without an error. The refusing cell halted with `ename` `IsolatedCellRefusal` and printed exactly one `Refused:` line, with no traceback:
+
+```text
+Refused: hostname: not an image PIL can open (cannot identify image file '/etc/hostname'); set BYOD_IMAGE_PATH to a .png, .jpg, .bmp or .webp file and run this cell again (the earlier results of this session and their outputs/ files were removed).
+```
+
+This run says nothing about the 1 cut cell, which did not run in it.
+
+| File (under `docs/execution-evidence/2026-11-02/`) | Captured SHA-256 | Committed SHA-256 |
+|---|---|---|
+| `convnextv2_classification_colab_6e4dd0e_colab-cli-t4_default.ipynb` | `5509e08c8abd98f5e43a07f21d9fdbdee84df88cf9c12701264d886d93613371` | `5509e08c8abd98f5e43a07f21d9fdbdee84df88cf9c12701264d886d93613371` (unchanged, no local path) |
+| `convnextv2_classification_colab_6e4dd0e_colab-cli-t4_default_exec.log` | `305b3784a976574da09347cced8414ecc2906eb3a0afe8634aa255c6a3c62c39` | `2d74b6527d0972a0003ad4ddcb872f54460ba6571829311a99334ca59c9a3e49` (2 local-path replacements) |
+| `convnextv2_classification_colab_6e4dd0e_colab-cli-t4_default_run_summary.json` | `837915e1d324ce422ab10e94a94c358ebebd68d96cdfd517e605cba4472998d2` | `837915e1d324ce422ab10e94a94c358ebebd68d96cdfd517e605cba4472998d2` (unchanged, no local path) |
+
+| File (under `docs/execution-evidence/2026-11-02/`) | Captured SHA-256 | Committed SHA-256 |
+|---|---|---|
+| `convnextv2_classification_colab_6e4dd0e_colab-cli-t4_refusal.ipynb` | `9ec336eed5bc1bc92b82a56027ea66f8bf7934f340b70c843386dafc1068c49e` | `9ec336eed5bc1bc92b82a56027ea66f8bf7934f340b70c843386dafc1068c49e` (unchanged, no local path) |
+| `convnextv2_classification_colab_6e4dd0e_colab-cli-t4_refusal_exec.log` | `bbff37bb1d655dc5ca80daa14b5d1bcf0f7f0555849ef6f124e125ddb7a02515` | `9a4faffbabb3930f107f035711b88fdaf26f17e48e6af4067e2642326178fb18` (2 local-path replacements) |
+| `convnextv2_classification_colab_6e4dd0e_colab-cli-t4_refusal_run_summary.json` | `b4b22b6a612a408632c0b8afdc96a1f886b5bf1f00126a6e9f82977ed8d24090` | `b4b22b6a612a408632c0b8afdc96a1f886b5bf1f00126a6e9f82977ed8d24090` (unchanged, no local path) |
+| `convnextv2_classification_colab_6e4dd0e_colab-cli-t4_refusal_run_copy.ipynb` | `99f035c71bd4644777b35e8133096a862864aadfe4e107ba7ad3c868b11bc94e` | `99f035c71bd4644777b35e8133096a862864aadfe4e107ba7ad3c868b11bc94e` (unchanged, no local path) |
+
+Not exercised by these runs: an accepted BYOD input (REL12) and a browser `Run all` of the interactive journeys (REL2).
+
+### REL14 hosted runs of blob `e2d169c3` (2026-11-07)
+
+These 2 runs executed main `a0f35e3e6d9a83b77914a54511bb09d5c86c67ab` (`tutorials/convnextv2_classification_colab.ipynb` blob `e2d169c38e397efc8a6f1df564a861010fd8ef54`) as Colab CLI sequential executions (`colab exec -f`) on fresh Colab Tesla T4 VMs (session `suite-convnextv2-a0f35e3-1003`), not a browser `Run all`. Colab CLI 0.7.5 (the runner's installed version, read after the runs; `exec.log` does not record it). The saved notebooks have no execution counts; cell order is taken from `exec.log`. Each `run_summary.json` records the commit and notebook blob above, `verdict` `PASS`, `exec_exit_code` 0, `input_unchanged` true and `stop_verified` true (the VM was released); the SHA-256 of each executed notebook equals the summary's `executed_sha256`. Local paths in the exec logs are redacted byte-wise to `<local-run-dir>`; the notebooks and summaries carried none.
+
+It differs from `08ef4efc` only in lock-header text (`git diff 6e4dd0e a0f35e3 -- tutorials/convnextv2_classification_colab.ipynb`): the header of `requirements-colab.lock.txt` and its copy in the install cell now name pillow 13.0.0 instead of 11.3.0, so the install cell's `LOCK_SHA256` changed, and the generator revision stamps moved from `0fdd6924075d` to `b5da536e1806`; no locked pin changed. The runs of `08ef4efc` above are history for this blob (REL14).
+
+| Date (UTC) | Commit / notebook blob | Executor | Path exercised | Code cells | Wall time | Outcome |
+|---|---|---|---|---:|---:|---|
+| 2026-11-07 09:05 | `a0f35e3` / `e2d169c3` | Colab CLI sequential execution, fresh Colab Tesla T4 | default settings, no overrides | 16/16 | 136.8 s | **One pass, no restart, 0 errors**; [retained evidence](execution-evidence/2026-11-07/) |
+| 2026-11-07 09:08 | `a0f35e3` / `e2d169c3` | Colab CLI sequential execution, fresh Colab Tesla T4 | scripted DAT20 refusal: `USE_BYOD_IMAGE` `False` → `True` and `BYOD_IMAGE_PATH` `""` → `'/etc/hostname'` | 16/16 of the cut copy | 141.1 s | **Refused as designed**: one `Refused:` line, no traceback, earlier cells clean; [retained evidence](execution-evidence/2026-11-07/) |
+
+Lines printed by the default run (quoted from the executed notebook):
+
+```text
+{'verified_files': 4, 'revision': 'f4db009e63145e02b3c075aa64d90ce41bcca4b1'}
+method                         correct  accuracy      95% Wilson  balanced
+majority class                   30/60     0.500  [0.377, 0.623]     0.500
+zero-shot ImageNet mapping       60/60     1.000  [0.940, 1.000]     1.000
+untrained two-class head         52/60     0.867  [0.758, 0.931]     0.867
+fine-tuned                       59/60     0.983  [0.911, 0.997]     0.983
+{'correct': 60, 'n': 60, 'accuracy': 1.0, 'wilson_95': [0.9398, 1.0], 'balanced_accuracy': 1.0}
+```
+
+Apart from timings, run ids, process ids, object addresses and the carried source revision, the printed output equals the 2026-11-02 default run of blob `08ef4efc` line for line, except the SHA-256 of the saved adapter `outputs/convnextv2_adapter.safetensors` (same size, 111,496,184 bytes) and the size of `convnextv2_classification_result.json` (13,400 bytes here, 13,404 then).
+
+**DAT20 refusal record (2026-11-07).** Overrides, set by `--set` on a copy of the blob: `USE_BYOD_IMAGE` `False` → `True` and `BYOD_IMAGE_PATH` `""` → `'/etc/hostname'` (the run copy differs from the blob in exactly those 2 source lines). The suite cut the run copy right after the refusing cell `convnextv2_classification-33`, dropping 1 cell (not a code cell), which reproduces `Run all` stopping at the first error; the cut copy is `run_copy.ipynb`, SHA-256 `72ea776b2027cde8bbcb6c550d74ad93910b78c38fe99c805aeaf2fdcb2ff3b3` (Git blob `652f4043`), equal to the summary's `run_copy_sha256`. The 15 earlier code cells completed without an error. The refusing cell halted with `ename` `IsolatedCellRefusal` and printed exactly one `Refused:` line, with no traceback:
+
+```text
+Refused: hostname: not an image PIL can open (cannot identify image file '/etc/hostname'); set BYOD_IMAGE_PATH to a .png, .jpg, .bmp or .webp file and run this cell again (the earlier results of this session and their outputs/ files were removed).
+```
+
+This run says nothing about the 1 cut cell, which did not run in it.
+
+| File (under `docs/execution-evidence/2026-11-07/`) | Captured SHA-256 | Committed SHA-256 |
+|---|---|---|
+| `convnextv2_classification_colab_a0f35e3_colab-cli-t4_default.ipynb` | `48b2414a3a6847089893074685d548a820038c1b874fc2d173d2e5c3703119e0` | `48b2414a3a6847089893074685d548a820038c1b874fc2d173d2e5c3703119e0` (unchanged, no local path) |
+| `convnextv2_classification_colab_a0f35e3_colab-cli-t4_default_exec.log` | `77b8d69aa13e55bc8e287aaf28cc5eaf99c8baeeec5bbaa9e5d13c7ec1536d03` | `b1ccc4edea4553ebcffe10c8e632d5e82d6ba059b2431e06e8ac2759321baec7` (2 local-path replacements) |
+| `convnextv2_classification_colab_a0f35e3_colab-cli-t4_default_run_summary.json` | `efbf211f146baaa3cdfb7f694de12020756e6c11ab325d7336eb56732b5aa834` | `efbf211f146baaa3cdfb7f694de12020756e6c11ab325d7336eb56732b5aa834` (unchanged, no local path) |
+
+| File (under `docs/execution-evidence/2026-11-07/`) | Captured SHA-256 | Committed SHA-256 |
+|---|---|---|
+| `convnextv2_classification_colab_a0f35e3_colab-cli-t4_refusal.ipynb` | `6cdaa8be89e3df2a920727583bafd921c2fb25b414825f958896434da1348e06` | `6cdaa8be89e3df2a920727583bafd921c2fb25b414825f958896434da1348e06` (unchanged, no local path) |
+| `convnextv2_classification_colab_a0f35e3_colab-cli-t4_refusal_exec.log` | `230f30410e5fd9259148855435b2833be8ebd688c572eebedae542fa89c54a80` | `814cde9bb0a93e523d1eccf970eee5ccffdd5316fc4b872bddac4e81f8b1542d` (2 local-path replacements) |
+| `convnextv2_classification_colab_a0f35e3_colab-cli-t4_refusal_run_summary.json` | `c0e4b09032ad297306149c1ec1bc5bb11dc8e18fd7f4a3cd95efaa8b5cc08ca6` | `c0e4b09032ad297306149c1ec1bc5bb11dc8e18fd7f4a3cd95efaa8b5cc08ca6` (unchanged, no local path) |
+| `convnextv2_classification_colab_a0f35e3_colab-cli-t4_refusal_run_copy.ipynb` | `72ea776b2027cde8bbcb6c550d74ad93910b78c38fe99c805aeaf2fdcb2ff3b3` | `72ea776b2027cde8bbcb6c550d74ad93910b78c38fe99c805aeaf2fdcb2ff3b3` (unchanged, no local path) |
 
 Not exercised by these runs: an accepted BYOD input (REL12) and a browser `Run all` of the interactive journeys (REL2).
